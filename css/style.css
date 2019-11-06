@@ -8,7 +8,7 @@ section div {
     min-width: 64px;
     height: 32px;
     padding: 6px;
-    margin: 16px;
+    margin: 32px 16px;
     border-radius: 50%;
     display: table;
     text-align: center;
