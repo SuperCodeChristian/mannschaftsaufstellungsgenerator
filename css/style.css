@@ -2,14 +2,19 @@ section {
     display: flex;
     background: rgba(128, 128, 128, .2);
     justify-content: center;
-    margin: 6% 0;
 }
 section div {
     min-width: 32px;
     height: 32px;
     padding: 6px;
     background-color: red;
-    margin: 2%;
+    margin: 3%;
+}
+.error {
+    color:red;
+}
+.success {
+    color:green;
 }
 #ausgabe {
     padding-top: 64px;

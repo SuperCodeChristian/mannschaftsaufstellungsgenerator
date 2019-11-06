@@ -20,9 +20,9 @@ let Mannschaft = {
             }
 
             if ((this.abwehr + this.mittelfeld + this.sturm) === 10) {
-                document.getElementById('error').innerHTML = 'Kann losgehen!';
+                document.getElementById('error').innerHTML = '<span class="success">Kann losgehen!</span>';
             } else {
-                document.getElementById('error').innerHTML = 'Die Mannschaft muss ELF Spieler haben!';
+                document.getElementById('error').innerHTML = '<span class="error">Die Mannschaft muss <strong>ELF</strong> Spieler haben!</span>';
             }
         }
         
