@@ -37,7 +37,7 @@ let Mannschaft = {
         torwartContainer.innerHTML = '';
         this.mannschaft.forEach((spieler) => {
             if (spieler.position == 'Torwart') {
-                torwartContainer.innerHTML = `<div>${spieler.name}</div>`;
+                torwartContainer.innerHTML = `<div><span>${spieler.name}</span></div>`;
             }
         })
     },
@@ -48,7 +48,7 @@ let Mannschaft = {
         abwehrContainer.innerHTML = '';
         this.mannschaft.forEach((spieler) => {
             if (spieler.position == 'Abwehr' && anzahlAbwehr < this.abwehr) {
-                abwehrContainer.innerHTML += `<div>${spieler.name}</div>`;
+                abwehrContainer.innerHTML += `<div><span>${spieler.name}</span></div>`;
                 anzahlAbwehr++;
             }
         })
@@ -60,7 +60,7 @@ let Mannschaft = {
         mittelfeldContainer.innerHTML = '';
         this.mannschaft.forEach((spieler) => {
             if (spieler.position == 'Mittelfeld' && anzahlMittelfeld < this.mittelfeld) {
-                mittelfeldContainer.innerHTML += `<div>${spieler.name}</div>`;
+                mittelfeldContainer.innerHTML += `<div><span>${spieler.name}</span></div>`;
                 anzahlMittelfeld++;
             }
         })
@@ -72,7 +72,7 @@ let Mannschaft = {
         sturmContainer.innerHTML = '';
         this.mannschaft.forEach((spieler) => {
             if (spieler.position == 'Sturm' && anzahlSturm < this.sturm) {
-                sturmContainer.innerHTML += `<div>${spieler.name}</div>`;
+                sturmContainer.innerHTML += `<div><span>${spieler.name}</span></div>`;
                 anzahlSturm++;
             }
         })

@@ -5,11 +5,30 @@ section {
     padding: 8px 0;
 }
 section div {
-    min-width: 32px;
+    min-width: 64px;
     height: 32px;
     padding: 6px;
+    margin: 16px;
+    border-radius: 50%;
+    display: table;
+    text-align: center;
+}
+#torwartContainer div {
     background-color: red;
-    margin: 3%;
+}
+#abwehrContainer div {
+    background-color: black;
+}
+#mittelfeldContainer div {
+    background-color: blue;
+}
+#sturmContainer div {
+    background-color: orangered;
+}
+section div span {
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
 }
 .error {
     color:red;
