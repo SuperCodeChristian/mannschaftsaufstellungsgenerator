@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Mannschaftsaufstellungsgenerator</h1>
+    <form id="eingabe">
+        <label for="abwehr">Abwehr</label>
+        <input type="number" id="abwehr" min="1" max="6" value="4">
+        <label for="mittelfeld">Mittelfeld</label>
+        <input type="number" id="mittelfeld" min="1" max="6" value="4">
+        <label for="sturm">Sturm</label>
+        <input type="number" id="sturm" min="1" max="6" value="2">
+    </form>
+    <div id="ausgabe">
+
+        <section id="torwartContainer"></section>
+        <section id="abwehrContainer"></section>
+        <section id="mittelfeldContainer"></section>
+        <section id="sturmContainer"></section>
+    
+    </div>
+    <div id="error">
+
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+section {
+    display: flex;
+    background: rgba(128, 128, 128, .2);
+    justify-content: center;
+    margin: 6% 0;
+}
+section div {
+    min-width: 32px;
+    height: 32px;
+    padding: 6px;
+    background-color: red;
+    margin: 2%;
+}
+#ausgabe {
+    padding-top: 64px;
+    background: url('../img/fussballfeld.jpg') center/contain no-repeat;
+    height: 75vh;
+}
