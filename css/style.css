@@ -1,43 +1,114 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  font-family: Avenir;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+* {
+  box-sizing: border-box;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+}
 section {
     display: flex;
-    background: rgba(128, 128, 128, .2);
     justify-content: center;
     padding: 8px 0;
+}
+section nav {
+    justify-self: flex-end;
 }
 section div {
     min-width: 64px;
     height: 32px;
     padding: 6px;
-    margin: 32px 16px;
+    margin: 2% 1%;
     border-radius: 50%;
     display: table;
     text-align: center;
 }
-#torwartContainer div {
+#goaly div {
+    color: white;
     background-color: red;
 }
-#abwehrContainer div {
+#defence div {
+    color: white;
     background-color: black;
 }
-#mittelfeldContainer div {
+#midfield div {
+    color: white;
     background-color: blue;
 }
-#sturmContainer div {
-    background-color: orangered;
+#storm div {
+    color: black;
+    background-color: goldenrod;
 }
 section div span {
-    color: white;
     display: table-cell;
     vertical-align: middle;
 }
 .error {
     color:red;
 }
+.info {
+  color: blue;
+}
 .success {
     color:green;
 }
-#ausgabe {
+#output {
     padding-top: 64px;
     background: url('../img/fussballfeld.jpg') center/contain no-repeat;
     height: 75vh;
+}
+.inp {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 280px;
+}
+.inp .label {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  font-size: 16px;
+  color: #9098a9;
+  font-weight: 500;
+  transform-origin: 0 0;
+  transition: all 0.2s ease;
+}
+
+.inp input {
+  -webkit-appearance: none;
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  padding: 12px 0;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  background: none;
+  border-radius: 0;
+  color: #223254;
+  transition: all 0.15s ease;
+}
+.inp input:hover {
+  background: rgba(34,50,84,0.03);
+}
+.inp input:not(:placeholder-shown) + span {
+  color: #5a667f;
+  transform: translateY(-26px) scale(0.75);
+}
+.inp input:focus {
+  background: none;
+  outline: none;
+}
+.inp input:focus + span {
+  color: red;
+  transform: translateY(-60px) scale(.75);
 }

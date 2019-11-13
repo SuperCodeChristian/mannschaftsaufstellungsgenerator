@@ -1,114 +1,178 @@
-let Mannschaft = {
-    name: '1. FC SuperCode',
-    mannschaft: [],
-    abwehr: 4,
-    mittelfeld: 4,
-    sturm: 2,
-    aufstellung(eTarget) {
+let Team = {
+    name: '',
+    players: [],
+    lineup: [],
+    status: null,
+    goaly: null,
+    defence: null,
+    midfield: null,
+    storm: null,
+    // METHODS
+    buildLineup(eTarget) {
+    
         if(eTarget){
-            if(eTarget.id == 'abwehr') {
-                this.generiereAbwehr();
-                this.abwehr = Number(eTarget.value);
+            if(eTarget.id == 'def') {
+                let num = this.lineup[0] = Number(eTarget.value);
+                this.buildDefence(num);
             }
-            if(eTarget.id == 'mittelfeld') {
-                this.generiereMittelfeld();
-                this.mittelfeld = Number(eTarget.value);
+            if(eTarget.id == 'mid') {
+                let num = this.lineup[1] = Number(eTarget.value);
+                this.buildMidfield(num);
             }
-            if(eTarget.id == 'sturm') {
-                this.generiereSturm();
-                this.sturm = Number(eTarget.value);
+            if(eTarget.id == 'strm') {
+                let num = this.lineup[2] = Number(eTarget.value);
+                this.buildStorm(num);
             }
+            // storing to cookie
+            this.setCookie('lineup', JSON.stringify(this.lineup));
 
-            if ((this.abwehr + this.mittelfeld + this.sturm) === 10) {
-                document.getElementById('error').innerHTML = '<span class="success">Kann losgehen!</span>';
+            if ((this.lineup[0] + this.lineup[1] + this.lineup[2]) === 10) {
+                this.buildStatus('<span class="success">Das Spiel kann beginnen!</span>');
             } else {
-                document.getElementById('error').innerHTML = '<span class="error">Die Mannschaft muss <strong>ELF</strong> Spieler haben!</span>';
+                this.buildStatus('<span class="error">Die Mannschaft muss <strong>ELF</strong> Spieler haben!</span>');
             }
-        }
+        } else { // no button pressed, page has just been loaded
+
+            var lineupCookie = this.getCookie('lineup');
+            if (lineupCookie) {
+                // got lineup from cookie
+                this.lineup = JSON.parse(lineupCookie);
+            } else {
+                this.lineup = this.setCookie('lineup', JSON.stringify([4,4,2]));
+            }
+            // communicating lineup to HTML
+            document.getElementById('def').value = this.lineup[0];
+            document.getElementById('mid').value = this.lineup[1];
+            document.getElementById('strm').value = this.lineup[2];
+
+            this.initialize();
+       }
         
-        this.generiereTorwart();
-        this.generiereAbwehr();
-        this.generiereMittelfeld();
-        this.generiereSturm();
     },
-    generiereTorwart(){
-        let torwartContainer = document.getElementById('torwartContainer');
-
-        torwartContainer.innerHTML = '';
-        this.mannschaft.forEach((spieler) => {
-            if (spieler.position == 'Torwart') {
-                torwartContainer.innerHTML = `<div><span>${spieler.name}</span></div>`;
+    initialize(){
+        this.buildGoaly();
+        this.buildDefence(this.lineup[0]);
+        this.buildMidfield(this.lineup[1]);
+        this.buildStorm(this.lineup[2]);
+    },
+    buildGoaly(){
+        this.players.forEach((player) => { // arrow function to preserve this
+            if (player.position == 'Torwart') {
+                this.goaly.innerHTML = `<div><span>${player.name}</span></div>`;
             }
         })
     },
-    generiereAbwehr() {
-        let anzahlAbwehr = 0;
-        let abwehrContainer = document.getElementById('abwehrContainer');
+    buildDefence(num) {
+        let count = 0;
 
-        abwehrContainer.innerHTML = '';
-        this.mannschaft.forEach((spieler) => {
-            if (spieler.position == 'Abwehr' && anzahlAbwehr < this.abwehr) {
-                abwehrContainer.innerHTML += `<div><span>${spieler.name}</span></div>`;
-                anzahlAbwehr++;
+        this.defence.innerHTML = ''; // clearing container
+        this.players.forEach((player) => { // arrow function to preserve this
+            if (player.position == 'Abwehr' && count < num) {
+                this.defence.innerHTML += `<div><span>${player.name}</span></div>`;
+                count++;
             }
         })
     },
-    generiereMittelfeld () {
-        let anzahlMittelfeld = 0;
-        let mittelfeldContainer = document.getElementById('mittelfeldContainer');
+    buildMidfield (num) {
+        let count = 0;
 
-        mittelfeldContainer.innerHTML = '';
-        this.mannschaft.forEach((spieler) => {
-            if (spieler.position == 'Mittelfeld' && anzahlMittelfeld < this.mittelfeld) {
-                mittelfeldContainer.innerHTML += `<div><span>${spieler.name}</span></div>`;
-                anzahlMittelfeld++;
+        this.midfield.innerHTML = ''; // clearing container
+        this.players.forEach((player) => { // arrow function to preserve this
+            if (player.position == 'Mittelfeld' && count < num) {
+                this.midfield.innerHTML += `<div><span>${player.name}</span></div>`;
+                count++;
             }
         })
     },
-    generiereSturm () {
-        let anzahlSturm = 0;
-        let sturmContainer = document.getElementById('sturmContainer');
+    buildStorm (num) {
+        let count = 0;
 
-        sturmContainer.innerHTML = '';
-        this.mannschaft.forEach((spieler) => {
-            if (spieler.position == 'Sturm' && anzahlSturm < this.sturm) {
-                sturmContainer.innerHTML += `<div><span>${spieler.name}</span></div>`;
-                anzahlSturm++;
+        this.storm.innerHTML = ''; // clearing container
+        this.players.forEach((player) => { // arrow function to preserve this
+            if (player.position == 'Sturm' && count < num) {
+                this.storm.innerHTML += `<div><span>${player.name}</span></div>`;
+                count++;
             }
         })
+    },
+    setPlayer (name, position, dob) {
+        this.buildStatus(`<span class="info">Wir haben ${this.players.push(new Player(name, position, dob))} Spieler in unserer Mannschaft!<span>`);
+
+        // constructor function for Player Object
+        function Player(name, position, dob) {
+            this.name = name;
+            this.position = position;
+            this.dob = dob;        
+        }
+    },
+    delPlayer (name) {
+        this.players.forEach((item, index) => {
+            if(item.name === name) {
+                this.players.splice(index, 1);
+            }
+        });
+        // number of players has changed
+        // new playfield setup needed!
+        this.initialize();
+    },
+    getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    },
+    setCookie(name, value) {  
+        document.cookie = `${name}=${value}; expires=Fri, 1 Dec 2019 23:59:59 GMT; path=/`;
+    },
+    buildStatus(status) {
+        this.status.innerHTML = status;
+    },
+    buildHTML() {
+        document.write(`<header> <h2 id="status"></h2> <nav id="input"> <form> <label class="inp" for="def"> <input type="number" id="def" min="1" max="6" value="" placeholder="&nbsp;"> <span class="label">Abwehr</span> </label> <label class="inp" for="mid"> <input type="number" id="mid" min="1" max="6" value="" placeholder="&nbsp;"> <span class="label">Mittelfeld</span> </label> <label class="inp" for="strm"> <input type="number" id="strm" min="1" max="6" value="" placeholder="&nbsp;"> <span class="label">Sturm</span> </label> </form> </nav></header><div id="output"> <section id="goaly"></section> <section id="defence"></section> <section id="midfield"></section> <section id="storm"></section></div>`);
     }
 }
-function Spieler(name, position) {
-    this.name = name;
-    this.position = position;
-    this.age = Math.round(Math.random() * 20 + 20);
-    this.changePosition = function (position) {
-        this.position = position;
-    }
 
-}
-Mannschaft.mannschaft = [
-    new Spieler ('Micha', 'Torwart'),
-    new Spieler ('Eric', 'Abwehr'),
-    new Spieler ('Anass', 'Abwehr'),
-    new Spieler ('Richie', 'Abwehr'),
-    new Spieler ('Klaus', 'Abwehr'),
-    new Spieler ('Christian', 'Abwehr'),
-    new Spieler ('Sergio', 'Abwehr'),
-    new Spieler ('Anton', 'Mittelfeld'),
-    new Spieler ('Michal', 'Mittelfeld'),
-    new Spieler ('Navid', 'Mittelfeld'),
-    new Spieler ('Georg', 'Mittelfeld'),
-    new Spieler ('Rihab', 'Mittelfeld'),
-    new Spieler ('Ali', 'Mittelfeld'),
-    new Spieler ('Mustafa', 'Sturm'),
-    new Spieler ('Shapour', 'Sturm'),
-    new Spieler ('Sam', 'Sturm'),
-    new Spieler ('Kim', 'Sturm'),
-    new Spieler ('Rezan', 'Sturm'),
-    new Spieler ('Waael', 'Sturm')
-]
-document.getElementById('eingabe').addEventListener('change', function(e){
-    Mannschaft.aufstellung(e.target);
+function init() {
+
+    // peparing HTML
+    Team.buildHTML();
+    // initialising Object
+    Team.name = '1. FC SuperCode';
+    Team.status = document.getElementById('status');
+    Team.goaly = document.getElementById('goaly');
+    Team.defence = document.getElementById('defence');
+    Team.midfield = document.getElementById('midfield');
+    Team.storm = document.getElementById('storm');
+    // adding Players
+    Team.setPlayer('Michael', 'Torwart', new Date(1988, 6, 19));
+    Team.setPlayer('Eric', 'Abwehr', new Date(1988, 6, 19));
+    Team.setPlayer('Anass', 'Abwehr', new Date(1988, 6, 19));
+    Team.setPlayer('Richie', 'Abwehr', new Date(1988, 6, 19));
+    Team.setPlayer('Klaus', 'Abwehr', new Date(1988, 6, 19));
+    Team.setPlayer('Christian', 'Abwehr', new Date(1968, 8, 13));
+    Team.setPlayer('Sérgio', 'Abwehr', new Date(1980, 10, 28));
+    Team.setPlayer('Anton', 'Mittelfeld', new Date(1980, 10, 28));
+    Team.setPlayer('Michal', 'Mittelfeld', new Date(1980, 10, 28));
+    Team.setPlayer('Navid', 'Mittelfeld', new Date(1980, 10, 28));
+    Team.setPlayer('Georg', 'Mittelfeld', new Date(1980, 10, 28));
+    Team.setPlayer('Rihab', 'Mittelfeld', new Date(1980, 10, 28));
+    Team.setPlayer('Ali', 'Mittelfeld', new Date(1980, 10, 28));
+    Team.setPlayer('Mustafa', 'Sturm', new Date(1980, 10, 28));
+    Team.setPlayer('Shapour', 'Sturm', new Date(1980, 10, 28));
+    Team.setPlayer('Sam', 'Sturm', new Date(1980, 10, 28));
+    Team.setPlayer('Kim', 'Sturm', new Date(1980, 10, 28));
+    Team.setPlayer('Rezan', 'Sturm', new Date(1980, 10, 28));
+    Team.setPlayer('Waael', 'Sturm', new Date(1980, 10, 28));
+    // setting up playfield
+    Team.buildLineup();
+
+};
+init();
+// attaching EventListener to InputContainer
+document.getElementById('input').addEventListener('change', function(e){
+    Team.buildLineup(e.target);
 })
-Mannschaft.aufstellung();
