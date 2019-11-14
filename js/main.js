@@ -1,3 +1,4 @@
+'use strict';
 let Team = {
     name: '',
     players: [],
@@ -133,6 +134,12 @@ let Team = {
     },
     buildHTML() {
         document.write(`<header> <h2 id="status"></h2> <nav id="input"> <form> <label class="inp" for="def"> <input type="number" id="def" min="1" max="6" value="" placeholder="&nbsp;"> <span class="label">Abwehr</span> </label> <label class="inp" for="mid"> <input type="number" id="mid" min="1" max="6" value="" placeholder="&nbsp;"> <span class="label">Mittelfeld</span> </label> <label class="inp" for="strm"> <input type="number" id="strm" min="1" max="6" value="" placeholder="&nbsp;"> <span class="label">Sturm</span> </label> </form> </nav></header><div id="output"> <section id="goaly"></section> <section id="defence"></section> <section id="midfield"></section> <section id="storm"></section></div>`);
+        this.status = document.getElementById('status');
+        let outputCollection = document.getElementById('output').children;
+        this.goaly = outputCollection[0];
+        this.defence = outputCollection[1];
+        this.midfield = outputCollection[2];
+        this.storm = outputCollection[3];
     }
 }
 
@@ -142,11 +149,6 @@ function init() {
     Team.buildHTML();
     // initialising Object
     Team.name = '1. FC SuperCode';
-    Team.status = document.getElementById('status');
-    Team.goaly = document.getElementById('goaly');
-    Team.defence = document.getElementById('defence');
-    Team.midfield = document.getElementById('midfield');
-    Team.storm = document.getElementById('storm');
     // adding Players
     Team.setPlayer('Michael', 'Torwart', new Date(1988, 6, 19));
     Team.setPlayer('Eric', 'Abwehr', new Date(1988, 6, 19));
@@ -173,6 +175,6 @@ function init() {
 };
 init();
 // attaching EventListener to InputContainer
-document.getElementById('input').addEventListener('change', function(e){
+document.getElementById('input').addEventListener('change', (e) => {
     Team.buildLineup(e.target);
-})
+});
